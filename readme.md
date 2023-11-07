@@ -12,6 +12,7 @@ API.
 2. Для кожної домашньої роботи створена своя гілка:
 
 - hw02-express 👉 [ДЗ-2](./homework/homework-02/README.ua.md)
+  👉[Нотатки](./homework/homework-02/README.info.md)
 - hw03-mongodb 👉 [ДЗ-3](./homework/homework-03/README.ua.md)
 - hw04-auth 👉 [ДЗ-4](./homework/homework-04/README.ua.md)
 - hw05-avatars 👉 [ДЗ-5](./homework/homework-05/README.ua.md)
