@@ -393,15 +393,39 @@ MESSAGE = HELLO!!!;
 console.log(process.env["MESSAGE"]);
 ```
 
-## Render
-
-[Render.com](https://render.com/) Краще реєструватись одразу через github.
-deploy відбувається з github New+ -> Web Service -> Build and deploy from Git
-repository -> Next  
-Вибираємо репозиторій -> Connect Вводимо дані: Name:
+Можна використовувати
+[command line option](https://www.npmjs.com/package/dotenv#preload) для
+підключення dotenv:
 
 ```js
+$ node -r dotenv/config your_script.js
+```
 
+## Render
+
+[Render.com](https://render.com/)  
+Краще реєструватись одразу через github. deploy відбувається з github  
+New+ -> Web Service -> Build and deploy from Git repository -> Next  
+Вибираємо репозиторій -> Connect  
+Вводимо дані:  
+**Name**: hw-rest-api-contacts  
+**Region**: Frankfurt(EU Central) - вибираємо найближчий регіон  
+**Branch**: main (або інша гілка)  
+**Root Directory**: якщо не в корені проекту  
+**Runtime**: Node Build  
+**Command**: yarn -> npm i  
+**Start Command**: yarn start -> npm start
+
+**Advanced** -> Add Environment Variable (key, value)  
+-> Create Web Service
+
+Попередньо слід прописати в файлі `package.json` версію Node:
+
+```js
+"engines": {
+    "node": "^18.*",
+    "npm": "^9.*"
+  },
 ```
 
 ```js
