@@ -292,7 +292,7 @@ app.use(cors());
 ### Передача JSON
 
 При створенні веб-застосунків на Node.js, часто доводиться працювати з даними в
-JSON форматі. Парсер JSON у додатку підключається наступним чином.
+JSON форматі. Глобально парсер JSON у додатку підключається наступним чином.
 
 ```js
 app.use(express.json());
@@ -504,3 +504,20 @@ messages: {
 
 [regex101](https://regex101.com/)  
 [regexr](https://regexr.com/)
+
+### Автоматичний перезапуск при змінах — [**nodemon**](https://www.npmjs.com/package/nodemon)
+
+Це інструмент, який допомагає розробляти програми на основі Node.js шляхом
+автоматичного перезапуску програми node, коли виявляються зміни файлів у
+каталозі.
+
+```bash
+npm install nodemon --save-dev
+```
+
+Починаючи з 18.11.0 версії Node.js модуль `nodemon`
+[вже не потрібен](https://nodejs.org/en/blog/release/v18.11.0):
+
+```bash
+node --watch index.js
+```
