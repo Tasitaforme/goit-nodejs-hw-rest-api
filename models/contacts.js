@@ -1,69 +1,36 @@
-const fs = require("node:fs/promises");
-const path = require("node:path");
-const { randomUUID } = require("node:crypto");
+const { Schema, model } = require("mongoose");
 
-const contactsPath = path.join(__dirname, "contacts.json");
-
-async function readContacts() {
-  const data = await fs.readFile(contactsPath, { encoding: "utf-8" });
-  return JSON.parse(data);
-}
-
-async function writeContacts(contacts) {
-  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-}
-
-const listContacts = async () => {
-  const contacts = await readContacts();
-  return contacts;
-};
-
-const getContactById = async contactId => {
-  const contacts = await readContacts();
-  const contact = contacts.find(el => el.id === contactId);
-  return contact || null;
-};
-
-const removeContact = async contactId => {
-  const contacts = await readContacts();
-  const index = contacts.findIndex(el => el.id === contactId);
-  if (index === -1) {
-    return null;
+const contactSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Set name for contact"],
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    versionKey: false,
+    timestamps: true,
   }
-  const [deletedContact] = contacts.splice(index, 1);
-  await writeContacts(contacts);
-  return deletedContact;
-};
+);
 
-const addContact = async body => {
-  const contacts = await readContacts();
-  const newContact = { id: randomUUID(), ...body };
-  contacts.push(newContact);
-  await writeContacts(contacts);
-  return newContact;
-};
+// contactSchema.post("save", (error, data, next) => {
+//   console.log(error);
+//   error.status = 400;
+//   next();
+// });
 
-const updateContact = async (contactId, body) => {
-  const contacts = await readContacts();
-  const index = contacts.findIndex(el => el.id === contactId);
-  if (index === -1) {
-    return null;
-  }
+const Contact = model("contact", contactSchema);
 
-  const prevContact = contacts[index];
-  contacts[index] = {
-    ...prevContact,
-    ...body,
-  };
-  const updatedContact = contacts[index];
-  await writeContacts(contacts);
-  return updatedContact;
-};
-
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-};
+module.exports = Contact;
