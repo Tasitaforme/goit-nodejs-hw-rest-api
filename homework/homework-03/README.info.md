@@ -29,27 +29,27 @@ MongoDB, розміщеної у хмарі, яка не вимагає дода
 пропонує безкоштовний рівень для початку роботи.
 
 1. Реєстрація [MongoDB Atlas](https://account.mongodb.com/account/login)
-2. Вкладка Projects -> New project. Ввести назву проекту -> Next -> Create
+2. Вкладка **Projects** -> New project. Ввести назву проекту -> Next -> Create
    project
-3. Вкладка Overview -> Create a deployment -> Create  
-   Заповнити інформацію для створення кластеру (cluster - M0, Provider - AWS,
-   Region - Frankfurt, Name - ...)  
+3. Вкладка **Overview** -> Create a deployment -> Create  
+   Заповнити інформацію для створення кластеру:  
+   (cluster - M0, Provider - AWS, Region - Frankfurt, Name - ...)  
     -> Create
 
-4. Вкладка Database Access -> Add New Database User.  
+4. Вкладка **Database Access** -> Add New Database User.  
     Вибрати метод автентифікації за допомогою пароля.  
     Придумати ім'я та пароль користувачеві і запам'ятайти (надалі цю інформація
    слід помістити в змінні оточення).  
     Виставити привілеї доступу як читання та запис до бази даних.  
    -> Create User
 
-5. Вкладка Network Access -> Add IP address  
+5. Вкладка **Network Access** -> Add IP address  
    Додати IP адреси у яких буде доступ до хмарної бази даних.  
    Як варіант можна дозволити доступ із будь-якої IP адреси 0.0.0.0/0. Але можна
    і вказати лише необхідні адреси.
 
-6. Вкладка Database -> Browse Collections (можна: Load a Sample Dataset або Add
-   My Own Data)
+6. Вкладка **Database** -> Browse Collections (можна: Load a Sample Dataset або
+   Add My Own Data)
 
 7. **Підключення до БД (MongoDB Compass)** Вкладка Database -> Cluster: Connect
    -> Compass  
@@ -231,13 +231,16 @@ user.methods.fullName = function () {
 При визначенні схеми Mongoose має вбудовані правила валідації, які можна вказати
 у схемі:
 
-- unique: робить поле унікальним, тобто в в інших документах колекції не може
-  бути такого поля з таким же значенням;
-- required: вимагає обов'язкової наявності значення для якості
-- min та max: задають мінімальне та максимальне значення для числових даних
-- minlength та maxlength: задають мінімальну та максимальну довжину для рядків
-- enum: рядок повинен представляти одне із значень у зазначеному масиві рядків
-- match: рядок повинен відповідати регулярному виразу
+- **unique**: робить поле унікальним, тобто в в інших документах колекції не
+  може бути такого поля з таким же значенням;
+- **required**: вимагає обов'язкової наявності значення для якості
+- **min** та **max**: задають мінімальне та максимальне значення для числових
+  даних
+- **minlength** та **maxlength**: задають мінімальну та максимальну довжину для
+  рядків
+- **enum**: рядок повинен представляти одне із значень у зазначеному масиві
+  рядків
+- **match**: рядок повинен відповідати регулярному виразу
 - `{versionKey: false, timestamps: true}` — вказує схемі, що замість версії
   об'єкта в базі потрібно зберігати час створення і час останнього оновлення.
 
@@ -404,7 +407,8 @@ $ node -r dotenv/config your_script.js
 ## Render
 
 [Render.com](https://render.com/)  
-Краще реєструватись одразу через github. deploy відбувається з github  
+Краще реєструватись одразу через github.  
+deploy відбувається з github  
 New+ -> Web Service -> Build and deploy from Git repository -> Next  
 Вибираємо репозиторій -> Connect  
 Вводимо дані:  
@@ -428,6 +432,4 @@ New+ -> Web Service -> Build and deploy from Git repository -> Next
   },
 ```
 
-```js
-
-```
+[Або слідувати цією інструкцією](https://render.com/docs/node-version)

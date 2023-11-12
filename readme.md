@@ -92,3 +92,5 @@ API.
   ключем`{ "message": "missing field favorite"}`і статусом` 400`
 - Повертає оновлений об'єкт контакту і статусом `200`. В іншому випадку,
   повертає json з ключем `" message ":" Not found "` і статусом `404`
+
+[Рендер DB з hw](https://hw-rest-api-contacts.onrender.com/api/contacts)
