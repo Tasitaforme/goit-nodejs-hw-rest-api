@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use(express.json());
 
-//health check
+// health check
 // app.get("/", (req, res, next) => {
 //   res.send("Hello world");
 // });

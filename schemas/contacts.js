@@ -1,8 +1,8 @@
 const Joi = require("joi");
 const NAME_RULE = /^[A-Za-z\s-]+$/;
-//(123) 123-12-34
+// (123) 123-12-34
 // const PHONE_RULE = /^\(\d{3}\) \d{3}-\d{2}-\d{2}$/;
-//(123) 123-1234
+// (123) 123-1234
 const PHONE_RULE = /^\(\d{3}\) \d{3}-\d{4}$/;
 const addContactSchema = Joi.object({
   name: Joi.string().min(2).max(30).pattern(NAME_RULE).required().messages({
