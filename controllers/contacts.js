@@ -1,22 +1,45 @@
-const Contact = require("../models/contacts");
+const Contact = require("../models/contact");
 
 const { HttpError, ctrlWrapper } = require("../helpers/");
 
 const getAll = async (req, res) => {
-  const result = await Contact.find({}, "-createdAt -updatedAt");
+  const { _id: owner } = req.user;
+
+  const { page = 1, limit = 20, favorite } = req.query;
+  const skip = (page - 1) * limit;
+
+  const query = Contact.find({ owner }, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  }).populate("owner", "email subscription");
+
+  if (favorite) {
+    query.where("favorite").equals(favorite);
+  }
+  const result = await query.exec();
+
+  // щоб видавати всі контакти з бази
+  // const result = await Contact.find({}, "-createdAt -updatedAt");
+
+  // щоб видавати контакти з бази лише певного власника їх
+  // const result = await Contact.find({ owner }, "-createdAt -updatedAt");
+
+  // щоб видати всю інформацію про власника книги можна використати метод populate()
+  // const result = await Contact.find(
+  //   { owner },
+  //   "-createdAt -updatedAt"
+  // ).populate("owner", "email subscription");
 
   res.status(200).json(result);
 };
 
 const getById = async (req, res) => {
   const { contactId } = req.params;
+  // перший спосіб
+  // const result = await Contact.findOne({_id: contactId})
+  // другий спосіб
   const result = await Contact.findById(contactId).exec();
-  // console.log(result);
-  // if (result === null) {
-  //   return res.status(404).send({ message: "Not found" });
-  //   // return res.status(404).json({ message: "Not found" });
-  //   // throw HttpError(404, "Not found! Please enter correct contact ID ");
-  // }
+
   console.log(result);
   if (!result) {
     throw HttpError(404, "Not found!");
@@ -25,7 +48,8 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
