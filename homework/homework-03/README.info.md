@@ -32,7 +32,8 @@ MongoDB, розміщеної у хмарі, яка не вимагає дода
 2. Вкладка **Projects** -> New project. Ввести назву проекту -> Next -> Create
    project
 3. Вкладка **Overview** -> Create a deployment -> Create  
-   Заповнити інформацію для створення кластеру:  
+   Заповнити інформацію для створення кластеру (безкоштовний кластер - 512 MB
+   Storage):  
    (cluster - M0, Provider - AWS, Region - Frankfurt, Name - ...)  
     -> Create
 
