@@ -63,7 +63,7 @@ const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
 
-  res.status(204).json();
+  res.status(204).end();
   //   щоб повідомлення було, краще писати 200
   //   res.status(200).json({
   //     message: "Logout success!",

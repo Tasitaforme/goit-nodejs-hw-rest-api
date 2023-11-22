@@ -39,8 +39,13 @@ const getById = async (req, res) => {
   // const result = await Contact.findOne({_id: contactId})
   // другий спосіб
   const result = await Contact.findById(contactId).exec();
+  // щоб заборонити доступ до не своїх контактів
+  if (result.owner.toString() !== req.user._id.toString()) {
+    // return res.status(403).send("Forbidden");
+    // return res.status(404).send("Book not found:(");
+    throw HttpError(404, "Not found!");
+  }
 
-  console.log(result);
   if (!result) {
     throw HttpError(404, "Not found!");
   }
@@ -57,6 +62,12 @@ const deleteById = async (req, res) => {
   const { contactId } = req.params;
 
   const result = await Contact.findByIdAndDelete(contactId);
+
+  // щоб заборонити доступ до не своїх контактів
+  if (result.owner.toString() !== req.user._id.toString()) {
+    throw HttpError(404, "Not found!");
+  }
+
   if (!result) {
     throw HttpError(404, "Not found!");
   }
@@ -68,6 +79,11 @@ const updateById = async (req, res) => {
   const result = await Contact.findByIdAndUpdate(contactId, req.body, {
     new: true,
   });
+
+  // щоб заборонити доступ до не своїх контактів
+  if (result.owner.toString() !== req.user._id.toString()) {
+    throw HttpError(404, "Not found!");
+  }
 
   if (!result) {
     throw HttpError(404, "Not found!");
@@ -81,6 +97,7 @@ const updateStatusContact = async (req, res) => {
   const result = await Contact.findByIdAndUpdate(contactId, req.body, {
     new: true,
   });
+
   if (!result) {
     throw HttpError(404, "Not found!");
   }

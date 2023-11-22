@@ -7,7 +7,8 @@
 та веб-додатків.
 
 [**Postman**](https://www.postman) — платформа API для створення та використання
-API.
+API.  
+[About the Postman VS Code extension](https://learning.postman.com/docs/getting-started/basics/about-vs-code-extension/)
 
 ```bash
 npm init -y
