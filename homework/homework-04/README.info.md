@@ -217,7 +217,7 @@ passport.use(
 
 ## Авторизація за допомогою стороніх сервісів
 
-[Доповідь про Auth for React.js (відео)](https://www.youtube.com/watch?v=nb4kM9CBhbY)
+[Доповідь про Auth for React.js (відео)](https://youtu.be/nb4kM9CBhbY)
 
 ### [okta](https://www.okta.com/)
 
@@ -338,5 +338,13 @@ const getAll = async (req, res) => {
 ```
 
 [Використання індексів в MongoDB (документація)](https://www.mongodb.com/docs/manual/indexes/)  
-[Хешування, кодування, шифрування. В чому різниця? (відео)](https://youtu.be/GQ0rDbJCKhQ?si=dwRu2obGa5knbHZP)  
-[JWT (відео)](https://youtu.be/vQldMjSJ6-w?si=dPGJ5wzMvV2GF46I)
+[Хешування, кодування, шифрування. В чому різниця? (відео)](https://youtu.be/GQ0rDbJCKhQ)
+
+JWT (відео від каналу JavaScript.Ninja):  
+[JWT. Часть 1. Теория](https://youtu.be/vQldMjSJ6-w)  
+[JWT. Часть 2. Проблемы](https://youtu.be/601CnGGp_MU)  
+[JWT. Часть 3. Сервер](https://youtu.be/_BSag4ABBMY)  
+[JWT. Часть 4. Клиент](https://youtu.be/XG-xOHogPkY)
+
+Сесії (stateful) та токени (stateless):  
+[Аутентификация в Веб-Приложениях: JWT и Сессии (відео)](https://youtu.be/w8ENQfaYIT8)
