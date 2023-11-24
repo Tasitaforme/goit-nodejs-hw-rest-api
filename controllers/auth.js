@@ -1,6 +1,11 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
+const path = require("path");
+const fs = require("fs/promises");
+const Jimp = require("jimp");
+const crypto = require("node:crypto");
 
 const { HttpError, ctrlWrapper } = require("../helpers/");
 
@@ -14,7 +19,15 @@ const register = async (req, res) => {
     throw HttpError(409, "Email already in use!");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+
+  // створюємо тимчасову аватарку
+  const avatarURL = gravatar.url(email, { s: "250" });
+
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    avatarURL,
+  });
 
   console.log(newUser);
   res.status(201).json({
@@ -53,8 +66,9 @@ const getCurrent = async (req, res) => {
   const { email, subscription, token } = req.user;
 
   res.status(200).json({
-    email,
-    subscription,
+    user: { email, subscription },
+    // email,
+    // subscription,
     token,
   });
 };
@@ -87,10 +101,70 @@ const subscription = async (req, res) => {
   res.status(200).json(result);
 };
 
+const updateAvatar = async (req, res) => {
+  const avatarsDir = path.join(__dirname, "../", "public", "avatars");
+  const { _id } = req.user;
+
+  if (!req.file) {
+    throw HttpError(404, "Not found!");
+  }
+
+  const resize = async fileDir => {
+    const image = await Jimp.read(fileDir);
+    image
+      .resize(250, Jimp.AUTO)
+      .cover(250, 250, Jimp.VERTICAL_ALIGN_MIDDLE)
+      .write(fileDir);
+  };
+
+  // змінюємо назву файлу на унікальну (додаючи просто id користувача)
+  // const { path: tempURL, originalname } = req.file;
+  // const filename = `${_id}_${originalname}`;
+  // const resultURL = path.join(avatarsDir, filename);
+  // await fs.rename(tempURL, resultURL);
+  // const avatarURL = path.join("avatars", filename);
+
+  // так як ми змінили назву раніше, то залишаємо її
+  const { path: tempURL, filename } = req.file;
+
+  await resize(tempURL);
+  const resultURL = path.join(avatarsDir, filename);
+
+  await fs.rename(tempURL, resultURL);
+  const avatarURL = path.join("avatars", filename);
+
+  await User.findByIdAndUpdate(
+    _id,
+    { avatarURL, avatarImage: filename },
+    { new: true }
+  ).exec();
+
+  res.status(200).json({
+    avatarURL,
+  });
+};
+
+const getAvatar = async (req, res) => {
+  console.log(req.user);
+  // res.end();
+  const user = await User.findById(req.user._id).exec();
+  if (user === null) {
+    return res.status(404).send({ message: "User not found" });
+  }
+
+  if (!user.avatarURL) {
+    return res.status(404).send({ message: "Avatar not found" });
+  }
+
+  res.sendFile(path.join(__dirname, "..", "public/", user.avatarURL));
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   subscription: ctrlWrapper(subscription),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  getAvatar: ctrlWrapper(getAvatar),
 };

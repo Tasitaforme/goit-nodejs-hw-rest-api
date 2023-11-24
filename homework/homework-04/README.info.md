@@ -240,9 +240,17 @@ passport.use(
 
 # Додаткова інформація
 
-### Регулярні вирази (email regex js)
+## Регулярні вирази (email regex js)
 
-[email regex js](https://stackabuse.com/validate-email-addresses-with-regular-expressions-in-javascript/)
+[https://regexr.com/](https://regexr.com/)  
+[Регулярні вирази (відео від каналу SavchukIT)](https://youtu.be/Qo1FZRvhYsI)  
+[Регулярні вирази на uk.javascript.info (навч.посібник)](https://uk.javascript.info/regular-expressions)
+
+```js
+const regexpEmail = = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/
+```
+
+[email regex js (article)](https://stackabuse.com/validate-email-addresses-with-regular-expressions-in-javascript/)
 
 ```js
 let regex = new RegExp(
