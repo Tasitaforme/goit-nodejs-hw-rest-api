@@ -14,6 +14,11 @@ app.use(logger(formatsLogger));
 app.use(cors());
 
 app.use(express.json());
+app.use(express.static("public"));
+// можна конкретизувати шлях:
+// const path = require("node:path");
+// const avatarsDir = path.join(__dirname, "public", "avatars");
+// app.use("/api/users/avatars", express.static(avatarsDir));
 
 // health check
 // app.get("/", (req, res, next) => {
@@ -28,6 +33,10 @@ app.use((_, res) => {
 });
 
 app.use((err, req, res, next) => {
+  if (err.message === "Unexpected field") {
+    return res.status(400).json({ message: "Invalid body (Unexpected field)" });
+  }
+
   const { status = 500, message = "Server Error" } = err;
   res.status(status).json({ message });
 });
