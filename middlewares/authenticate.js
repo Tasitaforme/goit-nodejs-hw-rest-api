@@ -18,7 +18,9 @@ const authenticate = async (req, res, next) => {
     if (!user || !user.token || user.token !== token) {
       next(HttpError(401, "Not authorized! User not found!"));
     }
-
+    if (!user.verify) {
+      throw HttpError(401, "Email not verified");
+    }
     // можна записати в req, хто робить цей запит, щоб потім використати це в controllers
     req.user = user;
     next();
